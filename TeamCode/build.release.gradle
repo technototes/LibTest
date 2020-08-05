@@ -1,0 +1,14 @@
+dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.3.1"
+    //implementation project(path: ':RobotLibrary')
+    testImplementation "org.mockito:mockito-core:2.21.0"
+    testImplementation "org.mockito:mockito-junit-jupiter:2.21.0"
+    implementation project(':FtcRobotController')
+    implementation project(path: ':RobotLibrary')
+    implementation (name: 'RobotCore-release', ext: 'aar')
+    implementation (name: 'Hardware-release', ext: 'aar')
+    implementation (name: 'FtcCommon-release', ext: 'aar')
+    implementation (name: 'WirelessP2p-release', ext:'aar')
+    implementation (name: 'tfod-release', ext:'aar')
+    implementation (name: 'tensorflow-lite-0.0.0-nightly', ext:'aar')
+}
