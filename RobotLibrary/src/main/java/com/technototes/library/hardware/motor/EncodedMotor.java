@@ -34,14 +34,14 @@ public class EncodedMotor<T extends DcMotor> extends Motor<T> implements Sensore
     }
 
     @Override
-    public void setPID(double p, double i, double d) {
+    public void setPIDValues(double p, double i, double d) {
         pid_p = p;
         pid_i = i;
         pid_d = d;
     }
 
     @Override
-    public void PIDControl(double val) {
+    public void setPositionPID(double val) {
         device.setPower(PIDUtils.calculatePIDDouble(pid_p, pid_i, pid_d, encoder.getSensorValue(), val));
     }
 
@@ -49,4 +49,5 @@ public class EncodedMotor<T extends DcMotor> extends Motor<T> implements Sensore
     public void resetEncoder() {
         encoder.zeroEncoder();
     }
+
 }

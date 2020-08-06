@@ -1,15 +1,13 @@
 package com.technototes.library.hardware.servo;
 
-import com.qualcomm.robotcore.util.Range;
 import com.technototes.library.hardware.Followable;
 import com.technototes.library.hardware.HardwareDevice;
 import com.technototes.library.hardware.Invertable;
 import com.technototes.library.hardware.PID;
-import com.technototes.library.hardware.Proportional;
 import com.technototes.library.hardware.Sensored;
 import com.technototes.library.util.PIDUtils;
 
-public class Servo<T extends com.qualcomm.robotcore.hardware.Servo> extends HardwareDevice<T> implements Sensored, Proportional, Invertable, Followable<Servo>, PID {
+public class Servo<T extends com.qualcomm.robotcore.hardware.Servo> extends HardwareDevice<T> implements Sensored, Invertable, Followable<Servo>, PID {
 
     public double pid_p, pid_i, pid_d;
 
@@ -30,8 +28,7 @@ public class Servo<T extends com.qualcomm.robotcore.hardware.Servo> extends Hard
         return device.getDirection() == com.qualcomm.robotcore.hardware.Servo.Direction.FORWARD;
     }
 
-    @Override
-    public void set(double val) {
+    public void setPosition(double val) {
         device.setPosition(val);
     }
 
@@ -51,14 +48,14 @@ public class Servo<T extends com.qualcomm.robotcore.hardware.Servo> extends Hard
     }
 
     @Override
-    public void setPID(double p, double i, double d) {
+    public void setPIDValues(double p, double i, double d) {
         pid_p = p;
         pid_i = i;
         pid_d = d;
     }
 
     @Override
-    public void PIDControl(double val) {
+    public void setPositionPID(double val) {
         device.setPosition(PIDUtils.calculatePIDDouble(pid_p, pid_i, pid_d, device.getPosition(), val));
     }
 

@@ -5,10 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.technototes.library.hardware.Followable;
 import com.technototes.library.hardware.HardwareDevice;
 import com.technototes.library.hardware.Invertable;
-import com.technototes.library.hardware.Proportional;
 import com.technototes.library.util.UnsupportedFeatureException;
 
-public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements Proportional, Invertable, Followable<Motor> {
+public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements Invertable, Followable<Motor> {
     public Motor(T d) {
         super(d);
     }
@@ -22,19 +21,19 @@ public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements
         return device.getDirection() == DcMotorSimple.Direction.FORWARD;
     }
 
-    @Override
-    public void set(double val) {
+    public void setSpeed(double val) {
         device.setPower(val);
     }
 
-    public double get(){
+    public double getSpeed(){
         return device.getPower();
     }
 
     @Override
     public void follow(Motor d) {
-        set(d.get());
+        setSpeed(d.getSpeed());
     }
+
     public void setIdleBehavior(DcMotor.ZeroPowerBehavior b) throws UnsupportedFeatureException {
         if(device instanceof DcMotor){
             ((DcMotor)device).setZeroPowerBehavior(b);
