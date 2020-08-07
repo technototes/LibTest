@@ -1,4 +1,4 @@
-package com.technototes.library.command.commands;
+package com.technototes.library.command;
 
 public class ParallelCommandGroup extends CommandGroup {
 }
