@@ -1,18 +1,18 @@
 package com.technototes.library.control;
 
-import com.technototes.library.command.AbstractCommand;
+import com.technototes.library.command.Command;
 
 public abstract class Trigger{
-    public abstract void whenActivated(AbstractCommand c);
-    public abstract void whenDeactivated(AbstractCommand c);
+    public abstract void whenActivated(Command c);
+    public abstract void whenDeactivated(Command c);
 
-    public abstract void whileActivated(AbstractCommand c);
-    public abstract void whileDeactivated(AbstractCommand c);
+    public abstract void whileActivated(Command c);
+    public abstract void whileDeactivated(Command c);
 
-    public abstract void toggleWhenActivated(AbstractCommand c);
-    public abstract void toggleWhenDeactivated(AbstractCommand c);
+    public abstract void toggleWhenActivated(Command c);
+    public abstract void toggleWhenDeactivated(Command c);
 
-    public abstract void toggleWhileActivated(AbstractCommand c);
-    public abstract void toggleWhileDeactivated(AbstractCommand c);
+    public abstract void toggleWhileActivated(Command c);
+    public abstract void toggleWhileDeactivated(Command c);
 
 }

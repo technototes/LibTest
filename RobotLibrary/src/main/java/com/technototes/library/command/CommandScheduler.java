@@ -13,39 +13,22 @@ public class CommandScheduler implements Runnable{
         }
         return instance;
     }
-    public enum State {
-        NEW, INITIALIZED, EXECUTED, FINISHED
-    }
-    public enum Type{
-        ONE_USE, MULTI_USE
-    }
-    public static class CommandState{
-        public State state;
-        public Type type = Type.MULTI_USE;
-        public CommandState(){
-            state = State.NEW;
-        }
-        public CommandState(Type t){
-            new CommandState();
-            type = t;
-        }
-    }
 
-    private Map<AbstractCommand, CommandState> scheduled = new LinkedHashMap<>();
+    private Map<Command, Command.CommandState> scheduledCommands = new LinkedHashMap<>();
 
-    public void schedule(AbstractCommand c){
-        scheduled.putIfAbsent(c, new CommandState(Type.MULTI_USE));
+    public void schedule(Command c){
+        scheduledCommands.putIfAbsent(c, c.commandState);
     }
-    public void schedule(BooleanSupplier b, AbstractCommand c){
+    public void schedule(BooleanSupplier b, Command c){
         schedule(new ConditionalCommand(b, c));
     }
 
     @Override
     public void run() {
-        scheduled.forEach((command, state) ->{
-            command.run(state);
-            if(state.state == State.FINISHED && state.type.equals(Type.ONE_USE))
-                scheduled.remove(command);
+        scheduledCommands.forEach((command, state) ->{
+            command.run();
+            if(state.state == Command.State.FINISHED && state.type.equals(Command.Type.ONE_USE))
+                scheduledCommands.remove(command);
         });
     }
 }
