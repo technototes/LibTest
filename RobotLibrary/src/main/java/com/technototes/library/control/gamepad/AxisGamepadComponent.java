@@ -7,14 +7,14 @@ import java.util.function.DoubleSupplier;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class AxisGamepadComponent extends ButtonGamepadComponent implements DoubleSupplier {
-    private DoubleSupplier supplier2;
+    private DoubleSupplier doubleSupplier;
 
     public AxisGamepadComponent(DoubleSupplier b){
         super(() -> b.getAsDouble() > CommandGamepad.STICK_THRESHOLD);
-        supplier2 = b;
+        doubleSupplier = b;
     }
     @Override
     public double getAsDouble() {
-        return supplier2.getAsDouble();
+        return doubleSupplier.getAsDouble();
     }
 }

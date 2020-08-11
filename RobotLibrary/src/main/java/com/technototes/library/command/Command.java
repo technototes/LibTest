@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 
-public class Command {
+public class Command implements Runnable{
     public enum State {
-        NEW, INITIALIZED, EXECUTED, FINISHED
+        RESET, INITIALIZED, EXECUTED
     }
     @Deprecated
     public enum Type{
@@ -21,7 +21,7 @@ public class Command {
         public State state;
         public Type type = Type.MULTI_USE;
         public CommandState(){
-            state = State.NEW;
+            state = State.RESET;
         }
         public CommandState(Type t){
             new CommandState();
@@ -61,19 +61,20 @@ public class Command {
         return c;
     }
 
+    @Override
     public void run(){
         switch (commandState.state){
-            case NEW:
+            case RESET:
                 init();
                 commandState.state = State.INITIALIZED;
-                return;
+                //THERE IS NO RETURN HERE SO IT FALLS THROUGH TO POST-INITIALIZATION
             case INITIALIZED:
                 execute();
                 commandState.state = isFinished() ? State.EXECUTED : State.INITIALIZED;
                 return;
             case EXECUTED:
                 end();
-                commandState.state = State.FINISHED;
+                commandState.state = State.RESET;
                 return;
         }
 

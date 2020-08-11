@@ -11,6 +11,10 @@ public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements
     public Motor(T d) {
         super(d);
     }
+    public Motor(HardwareDevice<T> m){
+        super(m.getDevice());
+    }
+
     @Override
     public void setInverted(boolean val) {
         device.setDirection(val ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE);

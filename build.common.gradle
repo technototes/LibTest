@@ -109,5 +109,6 @@ repositories {
 apply from: 'build.release.gradle'
 
 dependencies {
+    implementation 'com.acmerobotics.roadrunner:core:0.5.1'
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 }

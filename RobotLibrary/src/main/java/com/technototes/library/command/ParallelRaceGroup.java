@@ -4,7 +4,7 @@ public class ParallelRaceGroup extends CommandGroup {
     @Override
     public void run() {
         if(isFinished()) {
-            commandState.state = State.FINISHED;
+            commandState.state = State.RESET;
         } else {
             commands.forEach((command) -> run());
         }
@@ -13,7 +13,7 @@ public class ParallelRaceGroup extends CommandGroup {
     @Override
     public boolean isFinished() {
         for(Command c : commands) {
-            if (c.commandState.state == State.FINISHED) {
+            if (c.commandState.state == State.RESET) {
                 return true;
             }
         }

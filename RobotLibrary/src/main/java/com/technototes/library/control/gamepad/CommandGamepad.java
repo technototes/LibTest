@@ -8,20 +8,21 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class CommandGamepad {
     public static final double STICK_THRESHOLD = 0.5;
+
     public class Stick{
         private AxisGamepadComponent x, y;
         //supplier
-        public ButtonGamepadComponent press;
+        private ButtonGamepadComponent press;
         public Stick(AxisGamepadComponent d1, AxisGamepadComponent d2, ButtonGamepadComponent b){
             x=d2;
             y=d1;
             press = b;
         }
 
-        public double getX(){
+        public double getXAxis(){
             return x.getAsDouble();
         }
-        public double getY(){
+        public double getYAxis(){
             return y.getAsDouble();
         }
         public boolean getPress(){
@@ -38,7 +39,7 @@ public class CommandGamepad {
     public class Dpad{
 
         //suppliers
-        public ButtonGamepadComponent up, down, left, right;
+        private ButtonGamepadComponent up, down, left, right;
         public Dpad(ButtonGamepadComponent u, ButtonGamepadComponent d,
                     ButtonGamepadComponent l, ButtonGamepadComponent r){
             up = u;
@@ -65,12 +66,12 @@ public class CommandGamepad {
         }
     }
     private Gamepad gamepad;
-    public Stick lstick, rstick;
+    public Stick leftStick, rightStick;
     public Dpad dpad;
 
     //suppliers
     private AxisGamepadComponent ltrigger, rtrigger;
-    public ButtonGamepadComponent a,b,x,y,start,back,lbump,rbump;
+    private ButtonGamepadComponent a,b,x,y,start,back,lbump,rbump;
 
     public CommandGamepad(Gamepad g){
         gamepad = g;
@@ -105,10 +106,10 @@ public class CommandGamepad {
     }
 
     private void setStickSuppliers(Gamepad g) {
-        lstick = new Stick(new AxisGamepadComponent(() -> g.left_stick_x),
+        leftStick = new Stick(new AxisGamepadComponent(() -> g.left_stick_x),
                 new AxisGamepadComponent(() -> g.left_stick_y),
                 new ButtonGamepadComponent(() -> g.left_stick_button));
-        rstick = new Stick(new AxisGamepadComponent(() -> g.right_stick_x),
+        rightStick = new Stick(new AxisGamepadComponent(() -> g.right_stick_x),
                 new AxisGamepadComponent(() -> g.right_stick_y),
                 new ButtonGamepadComponent(() -> g.right_stick_button));
     }

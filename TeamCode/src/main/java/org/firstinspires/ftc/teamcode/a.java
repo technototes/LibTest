@@ -9,8 +9,6 @@ import com.technototes.library.RobotLibrary;
 @TeleOp(name = "Sensor Drive Testing")
 public class a extends LinearOpMode {
 
-  public boolean b = RobotLibrary.test;
-
   private static double FINEDRIVESPEED = 0.2;
   private TTRobot robot;
   private XDriveManualControl manualCtrl;

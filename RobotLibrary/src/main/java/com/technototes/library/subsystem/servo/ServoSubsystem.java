@@ -1,6 +1,36 @@
 package com.technototes.library.subsystem.servo;
 
+import com.technototes.library.hardware.servo.Servo;
+import com.technototes.library.subsystem.PID;
 import com.technototes.library.subsystem.Subsystem;
 
-public abstract class ServoSubsystem extends Subsystem {
+public abstract class ServoSubsystem<T extends Servo> extends Subsystem<T> implements PID {
+    public ServoSubsystem(T... d) {
+        super(d);
+    }
+    public void setPosition(double val){
+        for(T m : devices){
+            m.setPosition(val);
+        }
+    }
+
+    @Override
+    public void setPIDValues(double p, double i, double d) {
+        for(Servo s : devices){
+            s.setPIDValues(p, i, d);
+        }
+    }
+
+    @Override
+    public void setPositionPID(double ticks) {
+        for(Servo s : devices){
+            s.setPositionPID(ticks);
+        }
+    }
+
+    @Override
+    public void setPositionPID(double p, double i, double d, double ticks) {
+        setPIDValues(p, i, d);
+        setPositionPID(ticks);
+    }
 }

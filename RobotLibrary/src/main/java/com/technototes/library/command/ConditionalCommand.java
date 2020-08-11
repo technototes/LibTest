@@ -4,32 +4,33 @@ import java.util.function.BooleanSupplier;
 
 public class ConditionalCommand extends Command {
     private BooleanSupplier supplier;
-    private Command command;
+    private Command ifTrue, ifFalse, currentChoice;
     public ConditionalCommand(BooleanSupplier b, Command c){
-        supplier = b;
-        command = c;
+        this(b, c, null);
     }
-    @Override
-    public void execute() {
-        CommandScheduler.getInstance().schedule(command);
+    public ConditionalCommand(BooleanSupplier b, Command t, Command f){
+        supplier = b;
+        ifTrue = t;
+        ifFalse = f;
     }
 
     @Override
     public void run() {
         switch (commandState.state) {
-            case NEW:
-                if (supplier.getAsBoolean()) {
-                    init();
+            case RESET:
+                currentChoice = supplier.getAsBoolean() ? ifTrue : ifFalse;
+                if(currentChoice !=null){
+                    currentChoice.init();
                     commandState.state = State.INITIALIZED;
                 }
                 return;
             case INITIALIZED:
-                execute();
-                commandState.state = isFinished() ? State.EXECUTED : State.INITIALIZED;
+                currentChoice.execute();
+                commandState.state = currentChoice.isFinished() ? State.EXECUTED : State.INITIALIZED;
                 return;
             case EXECUTED:
-                end();
-                commandState.state = State.NEW;
+                currentChoice.end();
+                commandState.state = State.RESET;
                 return;
         }
     }

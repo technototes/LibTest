@@ -27,8 +27,6 @@ public class CommandScheduler implements Runnable{
     public void run() {
         scheduledCommands.forEach((command, state) ->{
             command.run();
-            if(state.state == Command.State.FINISHED && state.type.equals(Command.Type.ONE_USE))
-                scheduledCommands.remove(command);
         });
     }
 }

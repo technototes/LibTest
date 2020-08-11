@@ -21,7 +21,7 @@ public abstract class CommandGroup extends Command {
     public void run() {
         switch (commandState.state){
             case EXECUTED:
-                commandState.state = State.FINISHED;
+                commandState.state = State.RESET;
                 return;
             default:
                 runCommands();
