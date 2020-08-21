@@ -329,6 +329,8 @@ public class TTRobot implements IRobot {
         break;
     }
   }
+  public com.technototes.library.hardware.servo.Servo sss = new com.technototes.library.hardware.servo.Servo(blockFlipper);
+
 
   public void capstone(double speed) {
     cap.setPower(-speed);

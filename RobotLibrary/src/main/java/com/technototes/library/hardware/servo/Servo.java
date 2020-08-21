@@ -7,20 +7,21 @@ import com.technototes.library.hardware.PID;
 import com.technototes.library.hardware.Sensored;
 import com.technototes.library.util.PIDUtils;
 
-public class Servo<T extends com.qualcomm.robotcore.hardware.Servo> extends HardwareDevice<T> implements Sensored, Invertable, Followable<Servo>, PID {
+public class Servo extends HardwareDevice<com.qualcomm.robotcore.hardware.Servo> implements Sensored, Invertable<Servo>, Followable<Servo>, PID {
 
     public double pid_p, pid_i, pid_d;
 
-    public Servo(HardwareDevice<T> d) {
+    public Servo(HardwareDevice<com.qualcomm.robotcore.hardware.Servo> d) {
         super(d);
     }
-    public Servo(T d) {
+    public Servo(com.qualcomm.robotcore.hardware.Servo d) {
         super(d);
     }
 
     @Override
-    public void setInverted(boolean val) {
+    public Servo setInverted(boolean val) {
         device.setDirection(val ? com.qualcomm.robotcore.hardware.Servo.Direction.FORWARD : com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
+        return this;
     }
 
     @Override

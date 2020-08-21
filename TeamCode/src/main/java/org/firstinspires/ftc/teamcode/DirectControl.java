@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.technototes.library.hardware.servo.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -44,7 +45,6 @@ public class DirectControl extends LinearOpMode {
 
     while (opModeIsActive()) {
       loopTime.reset();
-
       // Handle Grabber clutch
       if (control.rtrigger() > TRIGGERTHRESHOLD) {
         robot.setClawPosition(ClawPosition.Open); // Open

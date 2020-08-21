@@ -34,9 +34,9 @@ public abstract class MecanumDrivebaseSubsystem<T extends Motor> extends Omnidir
                         * (Math.cos(robotHeadingRad) * Math.sin(angleRad)
                         - Math.sin(robotHeadingRad) * Math.cos(angleRad));
 
-        flMotor.setSpeed(powerCompY + powerCompX);
-        flMotor.setSpeed(-powerCompY + powerCompX);
-        flMotor.setSpeed(powerCompY - powerCompX);
-        flMotor.setSpeed(-powerCompY - powerCompX);
+        flMotor.setSpeedWithScale(powerCompY + powerCompX, getScale());
+        flMotor.setSpeedWithScale(-powerCompY + powerCompX, getScale());
+        flMotor.setSpeedWithScale(powerCompY - powerCompX, getScale());
+        flMotor.setSpeedWithScale(-powerCompY - powerCompX, getScale());
     }
 }

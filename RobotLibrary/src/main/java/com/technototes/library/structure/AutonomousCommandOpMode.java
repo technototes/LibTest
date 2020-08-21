@@ -1,4 +1,6 @@
 package com.technototes.library.structure;
 
-public class AutonomousCommandOpMode extends CommandOpMode {
+public abstract class AutonomousCommandOpMode extends CommandOpMode {
+
+
 }

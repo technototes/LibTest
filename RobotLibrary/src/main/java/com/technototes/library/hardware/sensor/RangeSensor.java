@@ -5,11 +5,11 @@ import com.technototes.library.hardware.Sensored;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class DistanceSensor extends Sensor<com.qualcomm.robotcore.hardware.DistanceSensor> {
+public class RangeSensor extends Sensor<com.qualcomm.robotcore.hardware.DistanceSensor> {
 
     private DistanceUnit distanceUnit;
 
-    public DistanceSensor(com.qualcomm.robotcore.hardware.DistanceSensor d) {
+    public RangeSensor(com.qualcomm.robotcore.hardware.DistanceSensor d) {
         super(d);
     }
 

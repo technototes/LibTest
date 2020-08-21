@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class CommandGamepad {
-    public static final double STICK_THRESHOLD = 0.5;
+    public double stickDeadzone = 0.1;
+    public double stickTriggerThreshold = 0.5;
 
     public class Stick{
         private AxisGamepadComponent x, y;
@@ -30,10 +31,10 @@ public class CommandGamepad {
         }
 
         public Dpad getAsDpad(){
-            return new Dpad(new ButtonGamepadComponent(() -> y.getAsDouble() > STICK_THRESHOLD),
-                    new ButtonGamepadComponent(() -> -y.getAsDouble() < STICK_THRESHOLD),
-                    new ButtonGamepadComponent(() -> -x.getAsDouble() < STICK_THRESHOLD),
-                    new ButtonGamepadComponent(() -> x.getAsDouble() > STICK_THRESHOLD));
+            return new Dpad(new ButtonGamepadComponent(() -> y.getAsDouble() > stickTriggerThreshold),
+                    new ButtonGamepadComponent(() -> -y.getAsDouble() < stickTriggerThreshold),
+                    new ButtonGamepadComponent(() -> -x.getAsDouble() < stickTriggerThreshold),
+                    new ButtonGamepadComponent(() -> x.getAsDouble() > stickTriggerThreshold));
         }
     }
     public class Dpad{
@@ -101,8 +102,8 @@ public class CommandGamepad {
     }
 
     private void setTriggerSuppliers(Gamepad g) {
-        ltrigger = new AxisGamepadComponent(() -> g.left_trigger);
-        rtrigger = new AxisGamepadComponent(() -> g.right_trigger);
+        ltrigger = new AxisGamepadComponent(() -> g.left_trigger, stickDeadzone);
+        rtrigger = new AxisGamepadComponent(() -> g.right_trigger, stickDeadzone);
     }
 
     private void setStickSuppliers(Gamepad g) {

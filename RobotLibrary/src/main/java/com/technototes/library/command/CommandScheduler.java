@@ -1,20 +1,40 @@
 package com.technototes.library.command;
 
 
+import com.technototes.library.structure.CommandOpMode;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
 
 public class CommandScheduler implements Runnable{
-    private static CommandScheduler instance;
-    public static synchronized CommandScheduler getInstance() {
-        if (instance == null) {
-            instance = new CommandScheduler();
+    private static CommandScheduler instance, initInstance, runInstance, endInstance;
+    public static synchronized CommandScheduler getInstance(){
+        return getSelectedInstance(instance);
+    }
+    public static synchronized CommandScheduler getSelectedInstance(CommandScheduler c){
+        if (c == null) {
+            c = new CommandScheduler();
+        }
+        return c;
+    }
+    public static synchronized CommandScheduler setCurrentInstance(CommandOpMode.OpModeState s){
+        instance.runLastTime();
+        switch (s){
+            case INIT:
+                instance = getSelectedInstance(initInstance);
+                break;
+            case RUN:
+                instance = getSelectedInstance(runInstance);
+                break;
+            case FINISHED:
+                instance = getSelectedInstance(endInstance);
+                break;
         }
         return instance;
     }
 
-    private Map<Command, Command.CommandState> scheduledCommands = new LinkedHashMap<>();
+    public Map<Command, Command.CommandState> scheduledCommands = new LinkedHashMap<>();
 
     public void schedule(Command c){
         scheduledCommands.putIfAbsent(c, c.commandState);
@@ -23,6 +43,14 @@ public class CommandScheduler implements Runnable{
         schedule(new ConditionalCommand(b, c));
     }
 
+    //for finalizing all commands
+    public void runLastTime(){
+        scheduledCommands.forEach((command, state) ->{
+            command.run();
+            if(!command.isFinished())
+                command.end();
+        });
+    }
     @Override
     public void run() {
         scheduledCommands.forEach((command, state) ->{

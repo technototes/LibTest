@@ -10,7 +10,11 @@ public class AxisGamepadComponent extends ButtonGamepadComponent implements Doub
     private DoubleSupplier doubleSupplier;
 
     public AxisGamepadComponent(DoubleSupplier b){
-        super(() -> b.getAsDouble() > CommandGamepad.STICK_THRESHOLD);
+        super(() -> b.getAsDouble() > 0.05);
+        doubleSupplier = b;
+    }
+    public AxisGamepadComponent(DoubleSupplier b, double t){
+        super(() -> b.getAsDouble() > t);
         doubleSupplier = b;
     }
     @Override

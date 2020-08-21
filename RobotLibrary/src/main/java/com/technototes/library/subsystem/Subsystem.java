@@ -1,5 +1,4 @@
 package com.technototes.library.subsystem;
-
 import com.technototes.library.hardware.HardwareDevice;
 
 public abstract class Subsystem<T extends HardwareDevice> {

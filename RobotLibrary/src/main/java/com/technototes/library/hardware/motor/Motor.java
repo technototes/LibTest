@@ -7,7 +7,7 @@ import com.technototes.library.hardware.HardwareDevice;
 import com.technototes.library.hardware.Invertable;
 import com.technototes.library.util.UnsupportedFeatureException;
 
-public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements Invertable, Followable<Motor> {
+public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements Invertable<Motor>, Followable<Motor> {
     public Motor(T d) {
         super(d);
     }
@@ -16,8 +16,9 @@ public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements
     }
 
     @Override
-    public void setInverted(boolean val) {
+    public Motor setInverted(boolean val) {
         device.setDirection(val ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE);
+        return this;
     }
 
     @Override
@@ -27,6 +28,9 @@ public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements
 
     public void setSpeed(double val) {
         device.setPower(val);
+    }
+    public void setSpeedWithScale(double val, double scale) {
+        device.setPower(val*scale);
     }
 
     public double getSpeed(){

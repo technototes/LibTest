@@ -5,6 +5,7 @@ import android.support.annotation.RequiresApi;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.technototes.library.hardware.HardwareDevice;
 import com.technototes.library.hardware.PID;
 import com.technototes.library.hardware.Sensored;
@@ -27,6 +28,11 @@ public class EncodedMotor<T extends DcMotor> extends Motor<T> implements Sensore
         super(m.getDevice());
     }
 
+    @Override
+    public EncodedMotor setInverted(boolean val) {
+        device.setDirection(val ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE);
+        return this;
+    }
     @Override
     public double getSensorValue() {
         return encoder.getSensorValue();

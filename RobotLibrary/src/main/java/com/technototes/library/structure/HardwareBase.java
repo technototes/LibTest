@@ -1,5 +1,4 @@
 package com.technototes.library.structure;
 
-public class OI{
-
+public abstract class HardwareBase {
 }

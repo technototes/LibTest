@@ -11,14 +11,14 @@ public abstract class TankDrivebaseSubsystem<T extends Motor> extends DrivebaseS
         rightSide = r;
     }
     public void arcadeDrive(double x, double y){
-        leftSide.setSpeed(y-2*x);
-        rightSide.setSpeed(-y+2*x);
+        leftSide.setSpeedWithScale(y-2*x, getScale());
+        rightSide.setSpeedWithScale(-y+2*x, getScale());
     }
     public void arcadeDrive(CommandGamepad.Stick s){
         arcadeDrive(s.getXAxis(), s.getYAxis());
     }
     public void tankDrive(double l, double r){
-        leftSide.setSpeed(l);
-        rightSide.setSpeed(-r);
+        leftSide.setSpeedWithScale(l, getScale());
+        rightSide.setSpeedWithScale(-r, getScale());
     }
 }

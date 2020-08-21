@@ -1,6 +1,6 @@
 package com.technototes.library.hardware;
 
-public interface Invertable {
-    void setInverted(boolean val);
+public interface Invertable<T extends HardwareDevice> {
+    T setInverted(boolean val);
     boolean getInverted();
 }
