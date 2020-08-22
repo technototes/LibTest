@@ -8,6 +8,8 @@ import com.technototes.library.subsystem.motor.SimpleMotorSubsystem;
 import com.technototes.library.subsystem.servo.SimpleServoSubsystem;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.newcode.subsystems.ClawRotateSubsystem;
+import org.firstinspires.ftc.teamcode.newcode.subsystems.LiftSubsystem;
 
 public class Robot extends RobotBase {
     public Hardware hardware;
@@ -16,13 +18,13 @@ public class Robot extends RobotBase {
     public SimpleMecanumDrivebaseSubsystem drivebaseSubsystem;
 
     //lift
-    public EncodedMotorSubsystem liftSubsystem;
+    public LiftSubsystem liftSubsystem;
 
     //slide
     public SimpleMotorSubsystem slideSubsytem;
 
     //claw
-    public SimpleServoSubsystem clawRotateSubsystem;
+    public ClawRotateSubsystem clawRotateSubsystem;
     public SimpleServoSubsystem clawSubsystem;
 
     //capstone
@@ -38,11 +40,11 @@ public class Robot extends RobotBase {
         drivebaseSubsystem = new SimpleMecanumDrivebaseSubsystem(
                 hardware.flMotor, hardware.frMotor, hardware.rlMotor, hardware.rrMotor);
 
-        liftSubsystem = new EncodedMotorSubsystem(hardware.lLiftMotor, hardware.rLiftMotor);
+        liftSubsystem = new LiftSubsystem(hardware.lLiftMotor, hardware.rLiftMotor);
 
         slideSubsytem = new SimpleMotorSubsystem(hardware.slide);
 
-        clawRotateSubsystem = new SimpleServoSubsystem(hardware.turn);
+        clawRotateSubsystem = new ClawRotateSubsystem(hardware.turn);
 
         clawSubsystem = new SimpleServoSubsystem(hardware.claw);
 

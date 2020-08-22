@@ -52,11 +52,11 @@ public class Hardware extends HardwareBase {
 
         slide = new Motor<CRServo>(hardwareMap.get(CRServo.class, "slide"));
         turn = new Servo(hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "grabTurn"));
-        claw = new Servo(hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "claw"));
+        claw = new Servo(hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "claw")).setRange(0, 0.7);
 
         cap = new Motor<CRServo>(hardwareMap.get(CRServo.class, "cap"));
 
-        blockFlipper = new Servo(hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "blockFlipper"));
+        blockFlipper = new Servo(hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "blockFlipper")).setRange(0.15, 0.75);
 
         sensorColorBottom = hardwareMap.get(ColorSensor.class, "sensorColorBottom");
 

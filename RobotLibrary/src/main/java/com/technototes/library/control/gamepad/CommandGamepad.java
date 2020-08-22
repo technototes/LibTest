@@ -13,7 +13,7 @@ public class CommandGamepad {
     public class Stick{
         private AxisGamepadComponent x, y;
         //supplier
-        private ButtonGamepadComponent press;
+        public ButtonGamepadComponent press;
         public Stick(AxisGamepadComponent d1, AxisGamepadComponent d2, ButtonGamepadComponent b){
             x=d2;
             y=d1;
@@ -40,7 +40,7 @@ public class CommandGamepad {
     public class Dpad{
 
         //suppliers
-        private ButtonGamepadComponent up, down, left, right;
+        public ButtonGamepadComponent up, down, left, right;
         public Dpad(ButtonGamepadComponent u, ButtonGamepadComponent d,
                     ButtonGamepadComponent l, ButtonGamepadComponent r){
             up = u;
@@ -71,8 +71,8 @@ public class CommandGamepad {
     public Dpad dpad;
 
     //suppliers
-    private AxisGamepadComponent ltrigger, rtrigger;
-    private ButtonGamepadComponent a,b,x,y,start,back,lbump,rbump;
+    public AxisGamepadComponent ltrigger, rtrigger;
+    public ButtonGamepadComponent a,b,x,y,start,back,lbump,rbump;
 
     public CommandGamepad(Gamepad g){
         gamepad = g;
@@ -131,5 +131,11 @@ public class CommandGamepad {
     }
     public boolean getBack(){
         return back.getAsBoolean();
+    }
+    public double getLeftTrigger(){
+        return ltrigger.getAsDouble();
+    }
+    public double getRightTrigger(){
+        return rtrigger.getAsDouble();
     }
 }

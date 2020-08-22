@@ -11,12 +11,10 @@ import java.util.function.BooleanSupplier;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class ButtonGamepadComponent extends Trigger implements BooleanSupplier {
-    private BooleanSupplier booleanSupplier;
-    private CommandScheduler commandScheduler;
-    private boolean pastState = false, normalToggle = false, inverseToggle = true;
+    protected BooleanSupplier booleanSupplier;
+    protected boolean pastState = false, normalToggle = false, inverseToggle = true;
     public ButtonGamepadComponent(BooleanSupplier b){
         booleanSupplier = b;
-        commandScheduler = CommandScheduler.getInstance();
     }
     private boolean uponPress(){
         boolean b = booleanSupplier.getAsBoolean() && !pastState;
@@ -28,37 +26,47 @@ public class ButtonGamepadComponent extends Trigger implements BooleanSupplier {
         pastState = booleanSupplier.getAsBoolean();
         return b;
     }
-    public void whenActivated(Command c){
-        commandScheduler.schedule(this::uponPress, c);
+    @Override
+    public ButtonGamepadComponent whenActivated(Command c){
+        CommandScheduler.getInstance().schedule(this::uponPress, c);
+        return this;
     }
-    public void whenDeactivated(Command c){
-        commandScheduler.schedule(this::uponRelease, c);
+    @Override
+    public ButtonGamepadComponent whenDeactivated(Command c){
+        CommandScheduler.getInstance().schedule(this::uponRelease, c);
+        return this;
     }
 
     @Override
-    public void whileActivated(Command c) {
-        commandScheduler.schedule(() -> getAsBoolean(), c);
+    public ButtonGamepadComponent whileActivated(Command c) {
+        CommandScheduler.getInstance().schedule(() -> getAsBoolean(), c);
+        return this;
     }
     @Override
-    public void whileDeactivated(Command c) {
-        commandScheduler.schedule(() -> !getAsBoolean(), c);
+    public ButtonGamepadComponent whileDeactivated(Command c) {
+        CommandScheduler.getInstance().schedule(() -> !getAsBoolean(), c);
+        return this;
     }
-
-    public void toggleWhenActivated(Command c){
-        commandScheduler.schedule(() -> (normalToggle = uponPress() ? !normalToggle : normalToggle) && uponPress(), c);
+    @Override
+    public ButtonGamepadComponent toggleWhenActivated(Command c){
+        CommandScheduler.getInstance().schedule(() -> (normalToggle = uponPress() ? !normalToggle : normalToggle) && uponPress(), c);
+        return this;
     }
-    public void toggleWhenDeactivated(Command c){
-        commandScheduler.schedule(() -> (inverseToggle = uponRelease() ? !inverseToggle : inverseToggle) && uponRelease(), c);
+    @Override
+    public ButtonGamepadComponent toggleWhenDeactivated(Command c){
+        CommandScheduler.getInstance().schedule(() -> (inverseToggle = uponRelease() ? !inverseToggle : inverseToggle) && uponRelease(), c);
+        return this;
     }
 
     @Override
-    public void toggleWhileActivated(Command c) {
-        commandScheduler.schedule(() -> normalToggle = uponPress() ? !normalToggle : normalToggle, c);
-
+    public ButtonGamepadComponent toggleWhileActivated(Command c) {
+        CommandScheduler.getInstance().schedule(() -> normalToggle = uponPress() ? !normalToggle : normalToggle, c);
+        return this;
     }
     @Override
-    public void toggleWhileDeactivated(Command c) {
-        commandScheduler.schedule(() -> inverseToggle = uponRelease() ? !inverseToggle : inverseToggle, c);
+    public ButtonGamepadComponent toggleWhileDeactivated(Command c) {
+        CommandScheduler.getInstance().schedule(() -> inverseToggle = uponRelease() ? !inverseToggle : inverseToggle, c);
+        return this;
     }
 
     @Override

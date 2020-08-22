@@ -3,16 +3,16 @@ package com.technototes.library.control;
 import com.technototes.library.command.Command;
 
 public abstract class Trigger{
-    public abstract void whenActivated(Command c);
-    public abstract void whenDeactivated(Command c);
+    public abstract Trigger whenActivated(Command c);
+    public abstract Trigger whenDeactivated(Command c);
 
-    public abstract void whileActivated(Command c);
-    public abstract void whileDeactivated(Command c);
+    public abstract Trigger whileActivated(Command c);
+    public abstract Trigger whileDeactivated(Command c);
 
-    public abstract void toggleWhenActivated(Command c);
-    public abstract void toggleWhenDeactivated(Command c);
+    public abstract Trigger toggleWhenActivated(Command c);
+    public abstract Trigger toggleWhenDeactivated(Command c);
 
-    public abstract void toggleWhileActivated(Command c);
-    public abstract void toggleWhileDeactivated(Command c);
+    public abstract Trigger toggleWhileActivated(Command c);
+    public abstract Trigger toggleWhileDeactivated(Command c);
 
 }

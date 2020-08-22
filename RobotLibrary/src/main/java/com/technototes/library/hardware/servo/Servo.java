@@ -38,8 +38,9 @@ public class Servo extends HardwareDevice<com.qualcomm.robotcore.hardware.Servo>
         return device.getPosition();
     }
 
-    public void setRange(double min, double max){
+    public Servo setRange(double min, double max){
         device.scaleRange(min, max);
+        return this;
     }
 
     @Override

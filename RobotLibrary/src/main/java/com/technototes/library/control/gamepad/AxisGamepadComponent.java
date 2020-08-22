@@ -17,6 +17,10 @@ public class AxisGamepadComponent extends ButtonGamepadComponent implements Doub
         super(() -> b.getAsDouble() > t);
         doubleSupplier = b;
     }
+    public AxisGamepadComponent setThreshold(double t){
+        booleanSupplier = () -> doubleSupplier.getAsDouble() > t;
+        return this;
+    }
     @Override
     public double getAsDouble() {
         return doubleSupplier.getAsDouble();

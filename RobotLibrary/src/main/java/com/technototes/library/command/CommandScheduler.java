@@ -47,8 +47,10 @@ public class CommandScheduler implements Runnable{
     public void runLastTime(){
         scheduledCommands.forEach((command, state) ->{
             command.run();
-            if(!command.isFinished())
+            if(!command.isFinished()) {
                 command.end();
+                command.commandState.state = Command.State.RESET;
+            }
         });
     }
     @Override

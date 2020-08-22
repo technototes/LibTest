@@ -1,6 +1,7 @@
 package com.technototes.library.command;
 
 
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.subsystem.Subsystem;
 
 import java.util.Arrays;
@@ -30,11 +31,14 @@ public class Command implements Runnable{
 
     }
 
+    public ElapsedTime commandRuntime;
     public CommandState commandState;
     protected Set<Subsystem> subsystems = new HashSet<>();
 
     public Command(){
         commandState = new CommandState();
+        commandRuntime = new ElapsedTime();
+        commandRuntime.reset();
     }
 
     public void addRequirements(Subsystem... requirements){
@@ -75,8 +79,8 @@ public class Command implements Runnable{
             case EXECUTED:
                 end();
                 commandState.state = State.RESET;
+                commandRuntime.reset();
                 return;
         }
-
     }
 }

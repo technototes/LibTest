@@ -2,7 +2,6 @@ package com.technototes.library.structure;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.technototes.library.command.CommandScheduler;
-import com.technototes.library.control.gamepad.CommandGamepad;
 
 public abstract class CommandOpMode extends LinearOpMode {
 
@@ -20,7 +19,7 @@ public abstract class CommandOpMode extends LinearOpMode {
         CommandScheduler.setCurrentInstance(opModeState);
         beginInit();
         while(!isStarted()) {
-            initLoop();
+            beginLoop();
             CommandScheduler.getInstance().run();
         }
         opModeState = OpModeState.RUN;
@@ -41,7 +40,7 @@ public abstract class CommandOpMode extends LinearOpMode {
 
     }
     //for other things to do in init
-    public void initLoop(){
+    public void beginLoop(){
 
     }
     //to schedule commands to be run
