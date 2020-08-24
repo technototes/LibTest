@@ -19,7 +19,7 @@ public class ConditionalCommand extends Command {
         switch (commandState.state) {
             case RESET:
                 currentChoice = supplier.getAsBoolean() ? ifTrue : ifFalse;
-                if(currentChoice !=null){
+                if(currentChoice != null){
                     currentChoice.init();
                     commandState.state = State.INITIALIZED;
                 }

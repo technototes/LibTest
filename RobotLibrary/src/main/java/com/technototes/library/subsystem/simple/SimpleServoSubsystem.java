@@ -1,7 +1,8 @@
-package com.technototes.library.subsystem.servo;
+package com.technototes.library.subsystem.simple;
 
 import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.hardware.servo.ServoGroup;
+import com.technototes.library.subsystem.servo.ServoSubsystem;
 
 public class SimpleServoSubsystem extends ServoSubsystem<Servo> {
     public SimpleServoSubsystem(Servo s1, Servo... s2){

@@ -1,10 +1,12 @@
 package com.technototes.library.structure;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.technototes.library.command.CommandScheduler;
 
 public abstract class CommandOpMode extends LinearOpMode {
-
+    public static double commandTimeAtEnd = 5;
+    public ElapsedTime timer = new ElapsedTime();
     public OpModeState opModeState = OpModeState.INIT;
     public enum OpModeState{
         INIT, RUN, FINISHED
@@ -16,24 +18,26 @@ public abstract class CommandOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        CommandScheduler.setCurrentInstance(opModeState);
         beginInit();
         while(!isStarted()) {
             beginLoop();
-            CommandScheduler.getInstance().run();
+            CommandScheduler.getInitInstance().run();
         }
+        CommandScheduler.getInitInstance().runLastTime();
         opModeState = OpModeState.RUN;
-        waitForStart();
-        CommandScheduler.setCurrentInstance(opModeState);
         runInit();
         while(opModeIsActive()) {
             runLoop();
-            CommandScheduler.getInstance().run();
+            CommandScheduler.getRunInstance().run();
         }
+        CommandScheduler.getRunInstance().runLastTime();
         opModeState = OpModeState.FINISHED;
-        CommandScheduler.setCurrentInstance(opModeState);
         end();
-        CommandScheduler.getInstance().run();
+        timer.reset();
+        while (timer.seconds() < commandTimeAtEnd) {
+            CommandScheduler.getEndInstance().run();
+        }
+        CommandScheduler.getEndInstance().runLastTime();
     }
     //for registering commands to run when robot is in init
     public void beginInit(){

@@ -41,8 +41,9 @@ public class Command implements Runnable{
         commandRuntime.reset();
     }
 
-    public void addRequirements(Subsystem... requirements){
+    public final Command addRequirements(Subsystem... requirements){
         subsystems.addAll(Arrays.asList(requirements));
+        return this;
     }
     public void init(){
 
@@ -53,16 +54,20 @@ public class Command implements Runnable{
     public boolean isFinished(){
         return true;
     }
+
     public void end(){
 
     }
-    public Command andThen(Command c){
-        CommandScheduler.getInstance().schedule(() -> this.isFinished(), c);
-        return c;
+    public final Command andThen(Command c){
+        if(c instanceof SequentialCommandGroup){
+            SequentialCommandGroup c2 = new SequentialCommandGroup(this);
+            c2.commands.addAll(((SequentialCommandGroup) c).commands);
+            return c2;
     }
-    public Command andThen(BooleanSupplier b, Command c){
-        CommandScheduler.getInstance().schedule(() -> this.isFinished()&&b.getAsBoolean(), c);
-        return c;
+        return new SequentialCommandGroup(this, c);
+    }
+    public final Command andThen(BooleanSupplier b, Command c){
+        return andThen(new ConditionalCommand(b, c));
     }
 
     @Override

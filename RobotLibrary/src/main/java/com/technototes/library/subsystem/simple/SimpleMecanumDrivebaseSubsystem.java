@@ -1,7 +1,8 @@
-package com.technototes.library.subsystem.drivebase;
+package com.technototes.library.subsystem.simple;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.technototes.library.hardware.motor.Motor;
+import com.technototes.library.subsystem.drivebase.MecanumDrivebaseSubsystem;
 
 public class SimpleMecanumDrivebaseSubsystem extends MecanumDrivebaseSubsystem<Motor> {
     public SimpleMecanumDrivebaseSubsystem(Motor<DcMotor> flMotor, Motor<DcMotor> frMotor, Motor<DcMotor> rlMotor, Motor<DcMotor> rrMotor) {

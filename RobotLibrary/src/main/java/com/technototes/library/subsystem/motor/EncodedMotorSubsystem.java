@@ -2,6 +2,7 @@ package com.technototes.library.subsystem.motor;
 
 import com.technototes.library.hardware.motor.EncodedMotor;
 import com.technototes.library.hardware.motor.EncodedMotorGroup;
+import com.technototes.library.hardware.servo.Servo;
 import com.technototes.library.subsystem.PID;
 
 public class EncodedMotorSubsystem extends MotorSubsystem<EncodedMotor> implements PID {
@@ -14,10 +15,14 @@ public class EncodedMotorSubsystem extends MotorSubsystem<EncodedMotor> implemen
         return this;
     }
 
-    public void setPosition(double ticks){
-        for(EncodedMotor m : devices){
-            m.setPosition(ticks, maxSpeed);
+    public boolean setPosition(double ticks){
+        boolean b = true;
+        for(EncodedMotor s : devices){
+            s.setPosition(ticks);
+            if(!s.isAtPosition(ticks))
+                b = false;
         }
+        return b;
     }
 
     @Override
@@ -28,15 +33,19 @@ public class EncodedMotorSubsystem extends MotorSubsystem<EncodedMotor> implemen
     }
 
     @Override
-    public void setPositionPID(double ticks) {
-        for(EncodedMotor m : devices) {
-            m.setPositionPID(ticks);
+    public boolean setPositionPID(double ticks) {
+        boolean b = true;
+        for(EncodedMotor s : devices){
+            s.setPositionPID(ticks);
+            if(!s.isAtPosition(ticks))
+                b = false;
         }
+        return b;
     }
 
     @Override
-    public void setPositionPID(double p, double i, double d, double ticks) {
+    public boolean setPositionPID(double p, double i, double d, double ticks) {
         setPIDValues(p, i, d);
-        setPositionPID(ticks);
+        return setPositionPID(ticks);
     }
 }

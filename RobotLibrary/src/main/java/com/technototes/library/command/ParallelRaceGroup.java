@@ -1,6 +1,9 @@
 package com.technototes.library.command;
 
 public class ParallelRaceGroup extends CommandGroup {
+    public ParallelRaceGroup(Command... commands){
+        super(commands);
+    }
     @Override
     public void run() {
         if(isFinished()) {

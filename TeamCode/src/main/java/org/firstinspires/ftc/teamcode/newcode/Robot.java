@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.newcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technototes.library.structure.RobotBase;
-import com.technototes.library.subsystem.drivebase.SimpleMecanumDrivebaseSubsystem;
-import com.technototes.library.subsystem.motor.EncodedMotorSubsystem;
-import com.technototes.library.subsystem.motor.SimpleMotorSubsystem;
-import com.technototes.library.subsystem.servo.SimpleServoSubsystem;
+import com.technototes.library.subsystem.simple.SimpleMecanumDrivebaseSubsystem;
+import com.technototes.library.subsystem.simple.SimpleMotorSubsystem;
+import com.technototes.library.subsystem.simple.SimpleServoSubsystem;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.newcode.subsystems.ClawRotateSubsystem;

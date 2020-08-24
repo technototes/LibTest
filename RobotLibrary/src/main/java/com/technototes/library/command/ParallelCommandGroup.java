@@ -1,6 +1,9 @@
 package com.technototes.library.command;
 
 public class ParallelCommandGroup extends CommandGroup {
+    public ParallelCommandGroup(Command... commands){
+        super(commands);
+    }
     @Override
     public void runCommands() {
         commands.forEach(command -> run());

@@ -22,15 +22,19 @@ public abstract class ServoSubsystem<T extends Servo> extends Subsystem<T> imple
     }
 
     @Override
-    public void setPositionPID(double ticks) {
+    public boolean setPositionPID(double ticks) {
+        boolean b = true;
         for(Servo s : devices){
             s.setPositionPID(ticks);
+            if(!s.isAtPosition(ticks))
+                b = false;
         }
+        return b;
     }
 
     @Override
-    public void setPositionPID(double p, double i, double d, double ticks) {
+    public boolean setPositionPID(double p, double i, double d, double ticks) {
         setPIDValues(p, i, d);
-        setPositionPID(ticks);
+        return setPositionPID(ticks);
     }
 }

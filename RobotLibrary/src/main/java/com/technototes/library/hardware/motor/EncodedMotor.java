@@ -1,8 +1,5 @@
 package com.technototes.library.hardware.motor;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -12,8 +9,6 @@ import com.technototes.library.hardware.Sensored;
 import com.technototes.library.hardware.sensor.encoder.Encoder;
 import com.technototes.library.hardware.sensor.encoder.MotorEncoderSensor;
 import com.technototes.library.util.PIDUtils;
-import com.technototes.library.util.UnsupportedFeatureException;
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class EncodedMotor<T extends DcMotor> extends Motor<T> implements Sensored, PID {
 
     public double pid_p, pid_i, pid_d;
@@ -35,7 +30,7 @@ public class EncodedMotor<T extends DcMotor> extends Motor<T> implements Sensore
     }
     @Override
     public double getSensorValue() {
-        return encoder.getSensorValue();
+        return (device.getDirection() == DcMotorSimple.Direction.FORWARD) ? encoder.getSensorValue() : -encoder.getSensorValue();
     }
 
     @Override
@@ -46,20 +41,28 @@ public class EncodedMotor<T extends DcMotor> extends Motor<T> implements Sensore
     }
 
     @Override
-    public void setPositionPID(double val) {
-        device.setPower(PIDUtils.calculatePIDDouble(pid_p, pid_i, pid_d, encoder.getSensorValue(), val));
+    public boolean setPositionPID(double val) {
+        if(!isAtPosition(val))
+            device.setPower(PIDUtils.calculatePIDDouble(pid_p, pid_i, pid_d, getSensorValue(), val));
+        else
+            device.setPower(0);
+        return isAtPosition(val);
     }
 
-    public void setPosition(double ticks){
-        setPosition(ticks, 0.5);
+    public boolean setPosition(double ticks){
+        return setPosition(ticks, 0.5);
     }
-    public void setPosition(double ticks, double speed){
-        setSpeed(Math.abs(ticks-encoder.getSensorValue()) > threshold ?
-                (encoder.getSensorValue() < ticks ? speed : -speed) :
-                0);
+    public boolean setPosition(double ticks, double speed){
+        if(!isAtPosition(ticks))
+            setSpeed(getSensorValue() < ticks ? speed : -speed);
+        else
+            setSpeed(0);
+        return isAtPosition(ticks);
+    }
+    public boolean isAtPosition(double ticks){
+        return ticks-getSensorValue() > threshold;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void resetEncoder() {
         encoder.zeroEncoder();
     }

@@ -57,8 +57,13 @@ public class Servo extends HardwareDevice<com.qualcomm.robotcore.hardware.Servo>
     }
 
     @Override
-    public void setPositionPID(double val) {
+    public boolean setPositionPID(double val) {
         device.setPosition(PIDUtils.calculatePIDDouble(pid_p, pid_i, pid_d, device.getPosition(), val));
+        return isAtPosition(val);
+    }
+
+    public boolean isAtPosition(double ticks){
+        return ticks-getSensorValue() > 0;
     }
 
 }

@@ -7,8 +7,6 @@ public abstract class OIBase {
     public OIBase(CommandGamepad g1, CommandGamepad g2){
         driverGamepad = g1;
         codriverGamepad = g2;
-        setDriverControls();
-        setCodriverControls();
     }
     public abstract void setDriverControls();
     public abstract void setCodriverControls();

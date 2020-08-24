@@ -3,6 +3,9 @@ package com.technototes.library.command;
 
 public class SequentialCommandGroup extends CommandGroup {
     private int currentCommandIndex = 0;
+    public SequentialCommandGroup(Command... commands){
+        super(commands);
+    }
     @Override
     public void runCommands() {
         Command currentCommand = commands.get(currentCommandIndex);

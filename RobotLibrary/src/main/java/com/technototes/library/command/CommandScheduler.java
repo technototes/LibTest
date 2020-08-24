@@ -8,30 +8,21 @@ import java.util.Map;
 import java.util.function.BooleanSupplier;
 
 public class CommandScheduler implements Runnable{
-    private static CommandScheduler instance, initInstance, runInstance, endInstance;
-    public static synchronized CommandScheduler getInstance(){
-        return getSelectedInstance(instance);
+    private static CommandScheduler initInstance, runInstance, endInstance;
+    public static synchronized CommandScheduler getInitInstance(){
+        return getSelectedInstance(initInstance);
+    }
+    public static synchronized CommandScheduler getRunInstance(){
+        return getSelectedInstance(runInstance);
+    }
+    public static synchronized CommandScheduler getEndInstance(){
+        return getSelectedInstance(endInstance);
     }
     public static synchronized CommandScheduler getSelectedInstance(CommandScheduler c){
         if (c == null) {
             c = new CommandScheduler();
         }
         return c;
-    }
-    public static synchronized CommandScheduler setCurrentInstance(CommandOpMode.OpModeState s){
-        instance.runLastTime();
-        switch (s){
-            case INIT:
-                instance = getSelectedInstance(initInstance);
-                break;
-            case RUN:
-                instance = getSelectedInstance(runInstance);
-                break;
-            case FINISHED:
-                instance = getSelectedInstance(endInstance);
-                break;
-        }
-        return instance;
     }
 
     public Map<Command, Command.CommandState> scheduledCommands = new LinkedHashMap<>();
@@ -47,7 +38,7 @@ public class CommandScheduler implements Runnable{
     public void runLastTime(){
         scheduledCommands.forEach((command, state) ->{
             command.run();
-            if(!command.isFinished()) {
+            if(command.commandState.state != Command.State.RESET) {
                 command.end();
                 command.commandState.state = Command.State.RESET;
             }
