@@ -8,15 +8,16 @@ public abstract class ServoSubsystem<T extends Servo> extends Subsystem<T> imple
     public ServoSubsystem(T... d) {
         super(d);
     }
-    public void setPosition(double val){
-        for(T m : devices){
+
+    public void setPosition(double val) {
+        for (T m : devices) {
             m.setPosition(val);
         }
     }
 
     @Override
     public void setPIDValues(double p, double i, double d) {
-        for(Servo s : devices){
+        for (Servo s : devices) {
             s.setPIDValues(p, i, d);
         }
     }
@@ -24,9 +25,9 @@ public abstract class ServoSubsystem<T extends Servo> extends Subsystem<T> imple
     @Override
     public boolean setPositionPID(double ticks) {
         boolean b = true;
-        for(Servo s : devices){
+        for (Servo s : devices) {
             s.setPositionPID(ticks);
-            if(!s.isAtPosition(ticks))
+            if (!s.isAtPosition(ticks))
                 b = false;
         }
         return b;

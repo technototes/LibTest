@@ -14,19 +14,20 @@ public class Servo extends HardwareDevice<com.qualcomm.robotcore.hardware.Servo>
     public Servo(HardwareDevice<com.qualcomm.robotcore.hardware.Servo> d) {
         super(d);
     }
+
     public Servo(com.qualcomm.robotcore.hardware.Servo d) {
         super(d);
+    }
+
+    @Override
+    public boolean getInverted() {
+        return device.getDirection() == com.qualcomm.robotcore.hardware.Servo.Direction.FORWARD;
     }
 
     @Override
     public Servo setInverted(boolean val) {
         device.setDirection(val ? com.qualcomm.robotcore.hardware.Servo.Direction.FORWARD : com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
         return this;
-    }
-
-    @Override
-    public boolean getInverted() {
-        return device.getDirection() == com.qualcomm.robotcore.hardware.Servo.Direction.FORWARD;
     }
 
     public void setPosition(double val) {
@@ -38,7 +39,7 @@ public class Servo extends HardwareDevice<com.qualcomm.robotcore.hardware.Servo>
         return device.getPosition();
     }
 
-    public Servo setRange(double min, double max){
+    public Servo setRange(double min, double max) {
         device.scaleRange(min, max);
         return this;
     }
@@ -62,8 +63,8 @@ public class Servo extends HardwareDevice<com.qualcomm.robotcore.hardware.Servo>
         return isAtPosition(val);
     }
 
-    public boolean isAtPosition(double ticks){
-        return ticks-getSensorValue() > 0;
+    public boolean isAtPosition(double ticks) {
+        return ticks - getSensorValue() > 0;
     }
 
 }

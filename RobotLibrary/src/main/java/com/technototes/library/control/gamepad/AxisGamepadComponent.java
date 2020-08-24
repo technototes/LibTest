@@ -9,18 +9,21 @@ import java.util.function.DoubleSupplier;
 public class AxisGamepadComponent extends ButtonGamepadComponent implements DoubleSupplier {
     private DoubleSupplier doubleSupplier;
 
-    public AxisGamepadComponent(DoubleSupplier b){
+    public AxisGamepadComponent(DoubleSupplier b) {
         super(() -> b.getAsDouble() > 0.05);
         doubleSupplier = b;
     }
-    public AxisGamepadComponent(DoubleSupplier b, double t){
+
+    public AxisGamepadComponent(DoubleSupplier b, double t) {
         super(() -> b.getAsDouble() > t);
         doubleSupplier = b;
     }
-    public AxisGamepadComponent setThreshold(double t){
+
+    public AxisGamepadComponent setThreshold(double t) {
         booleanSupplier = () -> doubleSupplier.getAsDouble() > t;
         return this;
     }
+
     @Override
     public double getAsDouble() {
         return doubleSupplier.getAsDouble();

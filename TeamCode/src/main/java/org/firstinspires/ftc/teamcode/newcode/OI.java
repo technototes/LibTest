@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.newcode.commands.lift.LiftUpCommand;
 
 public class OI extends OIBase {
     public Robot robot;
+
     public OI(CommandGamepad g1, CommandGamepad g2, Robot r) {
         super(g1, g2);
         robot = r;
@@ -32,6 +33,7 @@ public class OI extends OIBase {
         driverGamepad.dpad.right.whenActivated(new InstantCommand(() -> robot.capstonePusherSubsystem.setSpeed(1)))
                 .whenDeactivated(new InstantCommand(() -> robot.capstonePusherSubsystem.setSpeed(0)));
     }
+
     @Override
     public void setCodriverControls() {
         codriverGamepad.rtrigger.whenActivated(new InstantCommand(() -> robot.clawSubsystem.setPosition(1)));

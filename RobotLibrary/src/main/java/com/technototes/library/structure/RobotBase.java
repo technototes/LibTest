@@ -7,7 +7,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public abstract class RobotBase {
     public HardwareMap hardwareMap;
     public Telemetry telemetry;
-    public RobotBase(HardwareMap map, Telemetry tel){
+
+    public RobotBase(HardwareMap map, Telemetry tel) {
         hardwareMap = map;
         telemetry = tel;
     }

@@ -8,18 +8,18 @@ import java.util.List;
 public abstract class CommandGroup extends Command {
     protected List<Command> commands = new LinkedList<>();
 
-    public CommandGroup(Command... command){
+    public CommandGroup(Command... command) {
         commands.addAll(Arrays.asList(command));
     }
 
-    public Command addCommand(Command command){
+    public Command addCommand(Command command) {
         commands.add(command);
         return command;
     }
 
     @Override
     public void run() {
-        switch (commandState.state){
+        switch (commandState.state) {
             case EXECUTED:
                 commandState.state = State.RESET;
                 return;

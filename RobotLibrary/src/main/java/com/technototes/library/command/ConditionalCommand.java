@@ -5,10 +5,12 @@ import java.util.function.BooleanSupplier;
 public class ConditionalCommand extends Command {
     private BooleanSupplier supplier;
     private Command ifTrue, ifFalse, currentChoice;
-    public ConditionalCommand(BooleanSupplier b, Command c){
+
+    public ConditionalCommand(BooleanSupplier b, Command c) {
         this(b, c, null);
     }
-    public ConditionalCommand(BooleanSupplier b, Command t, Command f){
+
+    public ConditionalCommand(BooleanSupplier b, Command t, Command f) {
         supplier = b;
         ifTrue = t;
         ifFalse = f;
@@ -19,7 +21,7 @@ public class ConditionalCommand extends Command {
         switch (commandState.state) {
             case RESET:
                 currentChoice = supplier.getAsBoolean() ? ifTrue : ifFalse;
-                if(currentChoice != null){
+                if (currentChoice != null) {
                     currentChoice.init();
                     commandState.state = State.INITIALIZED;
                 }

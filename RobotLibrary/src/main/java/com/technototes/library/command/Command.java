@@ -9,70 +9,54 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 
-public class Command implements Runnable{
-    public enum State {
-        RESET, INITIALIZED, EXECUTED
-    }
-    @Deprecated
-    public enum Type{
-        ONE_USE, MULTI_USE
-    }
-
-    public static class CommandState{
-        public State state;
-        public Type type = Type.MULTI_USE;
-        public CommandState(){
-            state = State.RESET;
-        }
-        public CommandState(Type t){
-            new CommandState();
-            type = t;
-        }
-
-    }
-
+public class Command implements Runnable {
     public ElapsedTime commandRuntime;
     public CommandState commandState;
     protected Set<Subsystem> subsystems = new HashSet<>();
 
-    public Command(){
+    public Command() {
         commandState = new CommandState();
         commandRuntime = new ElapsedTime();
         commandRuntime.reset();
     }
 
-    public final Command addRequirements(Subsystem... requirements){
+    public final Command addRequirements(Subsystem... requirements) {
         subsystems.addAll(Arrays.asList(requirements));
         return this;
     }
-    public void init(){
+
+    public void init() {
 
     }
-    public void execute(){
+
+    public void execute() {
 
     }
-    public boolean isFinished(){
+
+    public boolean isFinished() {
         return true;
     }
 
-    public void end(){
+    public void end() {
 
     }
-    public final Command andThen(Command c){
-        if(c instanceof SequentialCommandGroup){
+
+    public final Command andThen(Command c) {
+        if (c instanceof SequentialCommandGroup) {
             SequentialCommandGroup c2 = new SequentialCommandGroup(this);
             c2.commands.addAll(((SequentialCommandGroup) c).commands);
             return c2;
-    }
+        }
         return new SequentialCommandGroup(this, c);
     }
-    public final Command andThen(BooleanSupplier b, Command c){
+
+    public final Command andThen(BooleanSupplier b, Command c) {
         return andThen(new ConditionalCommand(b, c));
     }
 
     @Override
-    public void run(){
-        switch (commandState.state){
+    public void run() {
+        switch (commandState.state) {
             case RESET:
                 init();
                 commandState.state = State.INITIALIZED;
@@ -87,5 +71,29 @@ public class Command implements Runnable{
                 commandRuntime.reset();
                 return;
         }
+    }
+
+    public enum State {
+        RESET, INITIALIZED, EXECUTED
+    }
+
+    @Deprecated
+    public enum Type {
+        ONE_USE, MULTI_USE
+    }
+
+    public static class CommandState {
+        public State state;
+        public Type type = Type.MULTI_USE;
+
+        public CommandState() {
+            state = State.RESET;
+        }
+
+        public CommandState(Type t) {
+            new CommandState();
+            type = t;
+        }
+
     }
 }

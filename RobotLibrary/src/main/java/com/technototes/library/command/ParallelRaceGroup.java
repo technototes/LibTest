@@ -1,12 +1,13 @@
 package com.technototes.library.command;
 
 public class ParallelRaceGroup extends CommandGroup {
-    public ParallelRaceGroup(Command... commands){
+    public ParallelRaceGroup(Command... commands) {
         super(commands);
     }
+
     @Override
     public void run() {
-        if(isFinished()) {
+        if (isFinished()) {
             commandState.state = State.RESET;
         } else {
             commands.forEach((command) -> run());
@@ -15,13 +16,14 @@ public class ParallelRaceGroup extends CommandGroup {
 
     @Override
     public boolean isFinished() {
-        for(Command c : commands) {
+        for (Command c : commands) {
             if (c.commandState.state == State.RESET) {
                 return true;
             }
         }
         return false;
     }
+
     @Override
     public void runCommands() {
         commands.forEach(command -> run());

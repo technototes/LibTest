@@ -11,8 +11,14 @@ public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements
     public Motor(T d) {
         super(d);
     }
-    public Motor(HardwareDevice<T> m){
+
+    public Motor(HardwareDevice<T> m) {
         super(m.getDevice());
+    }
+
+    @Override
+    public boolean getInverted() {
+        return device.getDirection() == DcMotorSimple.Direction.FORWARD;
     }
 
     @Override
@@ -21,20 +27,16 @@ public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements
         return this;
     }
 
-    @Override
-    public boolean getInverted() {
-        return device.getDirection() == DcMotorSimple.Direction.FORWARD;
+    public void setSpeedWithScale(double val, double scale) {
+        device.setPower(val * scale);
+    }
+
+    public double getSpeed() {
+        return device.getPower();
     }
 
     public void setSpeed(double val) {
         device.setPower(val);
-    }
-    public void setSpeedWithScale(double val, double scale) {
-        device.setPower(val*scale);
-    }
-
-    public double getSpeed(){
-        return device.getPower();
     }
 
     @Override
@@ -43,9 +45,9 @@ public class Motor<T extends DcMotorSimple> extends HardwareDevice<T> implements
     }
 
     public void setIdleBehavior(DcMotor.ZeroPowerBehavior b) throws UnsupportedFeatureException {
-        if(device instanceof DcMotor){
-            ((DcMotor)device).setZeroPowerBehavior(b);
-        }else{
+        if (device instanceof DcMotor) {
+            ((DcMotor) device).setZeroPowerBehavior(b);
+        } else {
             throw new UnsupportedFeatureException("Idle behavior for CRServos", "in the SDK it does not exist");
         }
     }

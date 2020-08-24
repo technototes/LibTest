@@ -1,7 +1,6 @@
 package com.technototes.library.hardware.sensor.encoder;
 
 
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.technototes.library.hardware.sensor.Sensor;
 
@@ -12,7 +11,7 @@ public class MotorEncoderSensor extends Sensor<DcMotor> implements Encoder {
     private int zero = 0;
     private IntSupplier supplier;
 
-    public MotorEncoderSensor(DcMotor d){
+    public MotorEncoderSensor(DcMotor d) {
         super(d);
         supplier = () -> d.getCurrentPosition();
         zeroEncoder();
@@ -20,7 +19,7 @@ public class MotorEncoderSensor extends Sensor<DcMotor> implements Encoder {
 
     @Override
     public void zeroEncoder() {
-        zero = (int)getSensorValue();
+        zero = (int) getSensorValue();
     }
 
     @Override
